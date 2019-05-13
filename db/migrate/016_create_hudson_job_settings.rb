@@ -1,8 +1,9 @@
 # $Id: 004_create_hudson_jobs.rb 175 2009-06-27 15:42:20Z toshiyuki.ando1971 $
 
-require 'hudson_job_settings'
+#require 'hudson_job_settings'
 
-class CreateHudsonJobSettings < ActiveRecord::Migration
+#class CreateHudsonJobSettings < ActiveRecord::Migration
+class CreateHudsonJobSettings < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
   def self.up
     create_table :hudson_job_settings do |t|
       t.column :hudson_job_id, :integer

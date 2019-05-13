@@ -1,6 +1,7 @@
 # $Id: 015_create_hudson_build_artifacts.rb 470 2010-03-21 15:38:21Z toshiyuki.ando1971 $
 
-class CreateHudsonBuildArtifacts < ActiveRecord::Migration
+#class CreateHudsonBuildArtifacts < ActiveRecord::Migration
+class CreateHudsonBuildArtifacts < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
   def self.up
     create_table :hudson_build_artifacts do |t|
       t.column :hudson_build_id, :integer

@@ -12,19 +12,10 @@ module RedmineHudson
     module QueryPatch
       def self.included(base) # :nodoc:
         base.extend(ClassMethods)
-
+        
         base.send(:include, InstanceMethods)
         base.send(:include, InstanceMethodsFor09Later) if RedmineHudson::RedmineExt.redmine_090_or_higher?
         base.send(:include, InstanceMethodsFor08) unless RedmineHudson::RedmineExt.redmine_090_or_higher?
-
-        # Same as typing in the class
-        base.class_eval do
-          unloadable # Send unloadable so it will not be unloaded in development
-
-          alias_method_chain :available_filters, :redmine_hudson unless method_defined?(:available_filters_without_redmine_hudson)
-          alias_method_chain :sql_for_field, :redmine_hudson unless method_defined?(:sql_for_field_without_redmine_hudson)
-        end
-
       end
     end
 
@@ -47,10 +38,12 @@ module RedmineHudson
 
     module InstanceMethods
 
-      def available_filters_with_redmine_hudson
+      #def available_filters_with_redmine_hudson
+      def available_filters
         return @available_filters if @available_filters
 
-        available_filters_without_redmine_hudson
+        #available_filters_without_redmine_hudson
+        super()
 
         return @available_filters unless project
 
@@ -210,7 +203,8 @@ module RedmineHudson
     end #InstanceMethods
 
     module InstanceMethodsFor09Later
-      def sql_for_field_with_redmine_hudson(field, operator, value, db_table, db_field, is_custom_filter=false)
+      #def sql_for_field_with_redmine_hudson(field, operator, value, db_table, db_field, is_custom_filter=false)
+      def sql_for_field(field, operator, value, db_table, db_field, is_custom_filter=false)
         case field
         when "hudson_build"
           return sql_for_hudson_build(field, operator, value)
@@ -219,13 +213,15 @@ module RedmineHudson
           return sql_for_hudson_job(field, operator, value)
 
         else
-           return sql_for_field_without_redmine_hudson(field, operator, value, db_table, db_field, is_custom_filter)
+           #return sql_for_field_without_redmine_hudson(field, operator, value, db_table, db_field, is_custom_filter)
+           return super(field, operator, value, db_table, db_field, is_custom_filter)
         end
       end
     end #InstanceMethodsFor09Later
 
     module InstanceMethodsFor08
-      def sql_for_field_with_redmine_hudson(field, value, db_table, db_field, is_custom_filter)
+      #def sql_for_field_with_redmine_hudson(field, value, db_table, db_field, is_custom_filter)
+      def sql_for_field(field, value, db_table, db_field, is_custom_filter)
         operator = operator_for field
         case field
         when "hudson_build"
@@ -235,10 +231,12 @@ module RedmineHudson
           return sql_for_hudson_job(field, operator, value)
 
         else
-           return sql_for_field_without_redmine_hudson(field, value, db_table, db_field, is_custom_filter)
+           #return sql_for_field_without_redmine_hudson(field, value, db_table, db_field, is_custom_filter)
+           return super(field, value, db_table, db_field, is_custom_filter)
         end
       end
     end #InstanceMethodsFor08
 
   end #RedmineExt
 end #RedmineHudson
+

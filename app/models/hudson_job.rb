@@ -1,8 +1,8 @@
 # $Id: hudson_job.rb 479 2010-03-27 16:59:25Z toshiyuki.ando1971 $
 
-require 'hudson_build'
-require 'hudson_api_error'
-require 'hudson_exceptions'
+#require 'hudson_build'
+#require 'hudson_api_error'
+#require 'hudson_exceptions'
 
 class HudsonJob < ActiveRecord::Base
   unloadable

@@ -1,6 +1,7 @@
 # $Id: 008_add_get_build_details_to_hudson_settings.rb 403 2009-12-05 04:17:10Z toshiyuki.ando1971 $
 
-class AddGetBuildDetailsToHudsonSettings < ActiveRecord::Migration
+#class AddGetBuildDetailsToHudsonSettings < ActiveRecord::Migration
+class AddGetBuildDetailsToHudsonSettings < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
   def self.up
     add_column :hudson_settings, :get_build_details, :boolean, :default => true
   end

@@ -1,5 +1,6 @@
 # $Id: 001_create_hudson_settings.rb 175 2009-06-27 15:42:20Z toshiyuki.ando1971 $
-class CreateHudsonSettings < ActiveRecord::Migration
+#class CreateHudsonSettings < ActiveRecord::Migration
+class CreateHudsonSettings < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
   def self.up
     create_table :hudson_settings do |t|
       t.column :project_id, :int

@@ -1,8 +1,8 @@
 # $Id: hudson_build.rb 483 2010-04-01 14:35:02Z toshiyuki.ando1971 $
 
-require 'hudson_api_error'
-require 'hudson_exceptions'
-require 'rexml_helper'
+#require 'hudson_api_error'
+#require 'hudson_exceptions'
+#require 'rexml_helper'
 include RexmlHelper
 
 class HudsonBuild < ActiveRecord::Base
@@ -32,10 +32,10 @@ class HudsonBuild < ActiveRecord::Base
                                 },
                   :datetime => :finished_at
 
-  acts_as_activity_provider :type => 'hudson',
+  acts_as_activity_provider :scope => joins(:project),
+                             :type => 'hudson',
                              :timestamp => "#{HudsonBuild.table_name}.finished_at",
                              :author_key => "#{HudsonBuild.table_name}.caused_by",
-                             :find_options => {:include => {:job => :project}},
                              :permission => :view_hudson
 
   include HudsonHelper

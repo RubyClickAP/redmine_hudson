@@ -1,14 +1,16 @@
 # $Id: 010_create_hudson_settings_health_reports.rb 403 2009-12-05 04:17:10Z toshiyuki.ando1971 $
 
-class CreateHudsonSettingsHealthReports < ActiveRecord::Migration
+#class CreateHudsonSettingsHealthReports < ActiveRecord::Migration
+class CreateHudsonSettingsHealthReports < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
   def self.up
     create_table :hudson_settings_health_reports do |t|
       t.column :hudson_settings_id, :int
       t.column :keyword, :string
       t.column :url_format, :string
     end
-    settings = HudsonSettings.find(:all)
-    settings.each { |setting|
+    #settings = HudsonSettings.find(:all)
+    #settings.each { |setting|
+    HudsonSettings.all.to_a.each { |setting|
       HudsonSettingsHealthReport.create(:hudson_settings_id => setting.id, 
                                         :keyword => setting.health_report_build_stability,
                                         :url_format => "${hudson.url}job/${job.name}/lastBuild/") if setting.health_report_build_stability != nil && setting.health_report_build_stability != ""

@@ -2,14 +2,15 @@
 
 require 'hudson_build'
 
-class UpdateBuilding < ActiveRecord::Migration
+#class UpdateBuilding < ActiveRecord::Migration
+class UpdateBuilding < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
   def self.up
-    HudsonBuild.update_all "building = 'true'", "building = 't'"
-    HudsonBuild.update_all "building = 'false'", "building = 'f'"
+    HudsonBuild.update_all( {building: 'true', building: 't'})
+    HudsonBuild.update_all( {building: 'false', building: 'f'})
   end
 
   def self.down
-    HudsonBuild.update_all "building = 't'", "building = 'true'"
-    HudsonBuild.update_all "building = 'f'", "building = 'false'"
+    HudsonBuild.update_all( {building: 't', building: 'true'})
+    HudsonBuild.update_all( {building: 'f', building: 'false'})
   end
 end
