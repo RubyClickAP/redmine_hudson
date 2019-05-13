@@ -1,5 +1,5 @@
 # $Id: init.rb 567 2011-02-10 12:23:41Z toshiyuki.ando1971@gmail.com $
-require 'dispatcher'
+#require 'dispatcher'
 require 'redmine'
 require 'hudson_application_hooks'
 require 'query_patch'
@@ -46,7 +46,8 @@ Redmine::Plugin.register :redmine_hudson do
 
 end
 
-Dispatcher.to_prepare do
+#Dispatcher.to_prepare do
+ActiveSupport::Reloader.to_prepare do
   Query.send( :include, RedmineHudson::RedmineExt::QueryPatch)
 end
 
