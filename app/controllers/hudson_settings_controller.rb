@@ -3,16 +3,16 @@
 # and open the template in the editor.
 
 require "rexml/document"
-require 'hudson_exceptions'
+#require 'hudson_exceptions'
 
 class HudsonSettingsController < ApplicationController
   unloadable
   layout 'base'
 
-  before_filter :find_project
-  before_filter :find_hudson
-  before_filter :authorize
-  before_filter :clear_flash
+  before_action :find_project
+  before_action:find_hudson
+  before_action :authorize
+  before_action :clear_flash
 
   include RexmlHelper
   include HudsonHelper

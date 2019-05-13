@@ -1,7 +1,7 @@
 # $Id: hudson.rb 525 2010-05-29 14:17:57Z toshiyuki.ando1971 $
 
-require 'hudson_api_error'
-require 'hudson_exceptions'
+#require 'hudson_api_error'
+#require 'hudson_exceptions'
 
 class Hudson
   unloadable

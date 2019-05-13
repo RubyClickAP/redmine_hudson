@@ -4,20 +4,22 @@
 
 require "rexml/document"
 require 'cgi'
-require 'hudson_exceptions'
+#require 'hudson_exceptions'
 require 'date'
 
-RAILS_DEFAULT_LOGGER.info 'Starting Hudson plugin for RedMine'
+#RAILS_DEFAULT_LOGGER.info 'Starting Hudson plugin for RedMine'
+Rails.logger.info 'Starting Hudson plugin for RedMine'
 
 class HudsonController < ApplicationController
   unloadable
   layout 'base'
 
-  before_filter :find_project
-  before_filter :find_hudson
-  before_filter :authorize
-  before_filter :clear_flash
-  accept_key_auth :index
+  before_action :find_project
+  before_action :find_hudson
+  before_action :authorize
+  before_action :clear_flash
+  #accept_key_auth :index
+  accept_rss_auth :index
 
   include HudsonHelper
   include RexmlHelper
